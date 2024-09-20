@@ -93,3 +93,4 @@ If for any reason the bot stops working or isn't responding, the workflow will a
 
 Example Structure:
 
+your-repo/ ├── .github/ │ └── workflows/ │ └── bot_deploy.yml └── restart_bot.sh
