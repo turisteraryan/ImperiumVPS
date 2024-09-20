@@ -1,0 +1,44 @@
+name: Bot Deployment and High Ping Optimization
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'  # Runs every 6 hours
+
+jobs:
+  deploy_bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js or Python
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Adjust if using Python
+
+    - name: Install Dependencies
+      run: |
+        npm install  # For Discord bot
+        # For Python bot: pip install -r requirements.txt
+
+    - name: Deploy Bot
+      run: |
+        echo "Deploying the bot..."
+        npm run start  # Adjust for Telegram if necessary
+
+    - name: Check High Ping and Restart
+      run: |
+        echo "Checking bot ping..."
+        # Add logic to check for high ping if necessary
+        npm run restart  # Adjust if restart process is different
+
+  ensure_reboot:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check and Force Restart
+      run: |
+        chmod +x ./restart_bot.sh  # Ensure the script is executable
+        ./restart_bot.sh  # Run the force restart script
+        
